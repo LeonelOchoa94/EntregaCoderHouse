@@ -13,8 +13,20 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useState } from 'react';
 import { CartWidget } from '../cartWidget/CartWidget';
+import { Link } from 'react-router-dom';
+import './styles.css';
 
-const pages = ['Productos', 'Mis Compras', 'Contacto'];
+const categories = [
+  {
+    id: 1,
+    name: 'Juegos',
+  },
+  {
+    id: 2,
+    name: 'Teclados y Mouse',
+  },
+  { id: 3, name: 'Monitores' },
+];
 
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -55,7 +67,9 @@ export const NavBar = () => {
               textDecoration: 'none',
             }}
           >
-            SoftNova
+            <Link sx={{ textDecoration: 'none', color: 'white' }} to={'/'}>
+              SoftNova
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -87,11 +101,11 @@ export const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to='/products' textAlign='center'>
+                  Productos
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -113,14 +127,13 @@ export const NavBar = () => {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                {page}
+          {categories.map((category) => {
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Link to='/'>{category.name}</Link>
               </Button>
-            ))}
-          </Box>
-
+            </Box>;
+          })}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Carrito'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
